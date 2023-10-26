@@ -1,30 +1,43 @@
 public class EstadoEmEspera implements EstadoQuiosque {
-    private Quiosque quiosque;
+    private final Quiosque quiosque;
 
     public EstadoEmEspera(Quiosque quiosque) {
         this.quiosque = quiosque;
     }
 
     @Override
-    public void executar() {
-        System.out.println("Quiosque iniciado. Aguardando identificação do aluno.");
-    }
-
-    @Override
-    public void mudarEstado() {
-        quiosque.setEstado(new EstadoIdentificado(quiosque));
-    }
-
-
-    public boolean validarAluno(String matricula) {
+    public void identificarUsuario() {
+        System.out.println("Por favor, digite sua matrícula.");
+        String matricula = "20221370036";
+        Aluno aluno = this.quiosque.getMockDB().getAluno(matricula);
         // Lógica de validação da matrícula
-        if (matricula != null && !matricula.isEmpty()) {
+        if (aluno != null) {
             System.out.println("Aluno identificado com sucesso.");
-            return true;
+            this.quiosque.setAluno(aluno);
+            this.quiosque.setEstado(new EstadoIdentificado(quiosque));
         } else {
             System.out.println("Matrícula inválida. Tente novamente.");
-            return false;
         }
     }
 
+    @Override
+    public void selecionarProduto() {
+        System.out.println("Por favor, identifique-se primeiro.");
+    }
+
+    @Override
+    public void pagarProduto() {
+        System.out.println("Por favor, identifique-se primeiro.");
+    }
+
+    @Override
+    public Ticket gerarTicket() {
+        System.out.println("Por favor, identifique-se primeiro.");
+        return null;
+    }
+
+    @Override
+    public void reiniciar() {
+       quiosque.setEstado(new EstadoEmEspera(quiosque));
+    }
 }

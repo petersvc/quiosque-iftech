@@ -6,47 +6,31 @@ public class EstadoIdentificado implements EstadoQuiosque {
     }
 
     @Override
-    public void executar() {
-
+    public void identificarUsuario() {
+        System.out.println("Você já está identificado como aluno.");
     }
 
     @Override
-    public void mudarEstado() {
-
+    public void selecionarProduto() {
+        Minicurso minicurso = quiosque.getMockDB().getMinicurso("ChatGPT em Detalhes");
+        quiosque.setMinicurso(minicurso);
+        System.out.println("Minicurso '" + minicurso.nome() + "' selecionado.");
+        quiosque.setEstado(new EstadoProcessando(quiosque));
     }
 
-//    @Override
-//    public void iniciar() {
-//        System.out.println("Aluno já identificado. Escolha um minicurso.");
-//    }
-//
-//    @Override
-//    public boolean validarAluno(String matricula) {
-//        System.out.println("Você já está identificado como aluno.");
-//        return true;  // Já está identificado, não precisa validar novamente
-//    }
-//
-//    @Override
-//    public void selecionarMinicurso(Minicurso minicurso) {
-//        quiosque.setMinicurso(minicurso);
-//        System.out.println("Minicurso '" + minicurso.getNome() + "' selecionado.");
-//        quiosque.setEstado(new EstadoProcessando(quiosque));
-//    }
-//
-//    @Override
-//    public boolean informarCartao(CartaoDeCredito cartao) {
-//        System.out.println("Por favor, selecione um minicurso primeiro.");
-//        return false;
-//    }
-//
-//    @Override
-//    public Ticket gerarTicket() {
-//        System.out.println("Por favor, selecione um minicurso primeiro.");
-//        return null;
-//    }
-//
-//    @Override
-//    public void reiniciar() {
-//        quiosque.setEstado(new EstadoEmEspera(quiosque));
-//    }
+    @Override
+    public void pagarProduto() {
+        System.out.println("Por favor, selecione um minicurso primeiro.");
+    }
+
+    @Override
+    public Ticket gerarTicket() {
+        System.out.println("Por favor, selecione um minicurso primeiro.");
+        return null;
+    }
+
+    @Override
+    public void reiniciar() {
+        quiosque.setEstado(new EstadoEmEspera(quiosque));
+    }
 }

@@ -1,32 +1,16 @@
 public class Ticket {
-    private String alunoMatricula;
+    private Aluno aluno;
     private String minicursoNome;
     private double preco;
 
-    public Ticket(String alunoMatricula, String minicursoNome, double preco) {
-        this.alunoMatricula = alunoMatricula;
+    public Ticket(Aluno aluno, String minicursoNome, double preco) {
+        this.aluno = aluno;
         this.minicursoNome = minicursoNome;
         this.preco = preco;
     }
 
-    public String getAlunoMatricula() {
-        return alunoMatricula;
-    }
-
-    public String getMinicursoNome() {
-        return minicursoNome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
     @Override
     public String toString() {
-        return "Ticket{" +
-                "alunoMatricula='" + alunoMatricula + '\'' +
-                ", minicursoNome='" + minicursoNome + '\'' +
-                ", preco=" + preco +
-                '}';
+        return "Matricula do Aluno: " + aluno.matricula() + '\n' + "Nome do Aluno: " + aluno.nome() + "\n" + "Minicurso: " + minicursoNome + '\n' + "Preço: " + preco ;
     }
 }
