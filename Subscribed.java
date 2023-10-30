@@ -6,8 +6,8 @@ public class Subscribed implements State {
     }
 
     @Override
-    public void transitionTo() {
-        this.context.setState(new Completed(context));
+    public void transitionTo(State state) {
+        this.context.setState(state);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Subscribed implements State {
     }
 
     @Override
-    public Ticket generateTicket() throws Exception {
+    public Ticket generateTicket() {
         Ticket ticket = new Ticket(
                 context.getStudent(),  // Substitua pelo valor apropriado
                 context.getCourse().getName(),
@@ -34,10 +34,12 @@ public class Subscribed implements State {
         );
 
         context.getCourse().ocuparVaga();
+        transitionTo(new Completed(context));
+
         System.out.println("Inscrição realizada com sucesso");
-        context.setState(new Completed(context));
         System.out.println("vagas restantes: " + context.getCourse().getSlots());
         System.out.println("-------- Ticket gerado --------\n" + ticket + "\n" + "-------------------------------");
+
         return ticket;
 
     }

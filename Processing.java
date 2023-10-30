@@ -8,8 +8,8 @@ public class Processing implements State {
     }
 
     @Override
-    public void transitionTo() {
-        context.setState(new Subscribed(context));
+    public void transitionTo(State state) {
+        this.context.setState(state);
     }
 
     @Override
@@ -30,9 +30,9 @@ public class Processing implements State {
         if (creditCard != null && Objects.equals(creditCard.getCvv(), cvv) && Objects.equals(creditCard.getExpirationDate(), expirationDate) && creditCard.getBalance() >= this.context.getCourse().getPrice()) {
             System.out.println("Cartão autorizado. Realizando o pagamento");
             creditCard.setBalance(creditCard.getBalance() - context.getCourse().getPrice());
-            transitionTo();
+            this.transitionTo(new Subscribed(context));
         } else {
-            context.setState(new OnHold(context));
+            this.transitionTo(new OnHold(context));
             throw new Exception("Compra não autorizada. Tente novamente.");
         }
     }

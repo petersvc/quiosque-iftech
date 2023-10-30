@@ -6,8 +6,8 @@ public class OnHold implements State {
     }
 
     @Override
-    public void transitionTo() {
-        this.context.setState(new Identified(context));
+    public void transitionTo(State state) {
+        this.context.setState(state);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class OnHold implements State {
         if (student != null) {
             System.out.println("Estudante " + student.getName() + " identificado com sucesso.");
             this.context.setStudent(student);
-            this.transitionTo();
+            this.transitionTo(new Identified(context));
         } else {
             throw new NullPointerException("Matrícula inválida. Tente novamente.");
         }

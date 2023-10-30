@@ -23,12 +23,34 @@ public class Kiosk {
 
     public void start() {
         System.out.println("Quiosque iniciado.");
+        this.execute();
+    }
+
+    public void execute() {
+        do {
+            if (this.getStudent() == null) {
+                this.identifyStudent();
+            }
+
+            if (this.getCourse() == null) {
+                this.selectCourse();
+            }
+
+            this.payment();
+
+            if (this.getState() instanceof OnHold) {
+                this.reset();
+                this.execute();
+            } else {
+                this.generateTicket();
+                this.restart();
+            }
+        } while (true);
     }
 
     public void identifyStudent() {
         System.out.println("Por favor, digite a sua matrícula.");
         String enrollment = this.scanner.nextLine();
-        //String matricula = "20221370036";
         try {
             this.state.identifyStudent(enrollment);
         } catch (Exception e) {
@@ -57,15 +79,12 @@ public class Kiosk {
     public void payment() {
         System.out.println("Por favor, digite o número do cartão");
         String cardNumber = this.scanner.nextLine();
-        System.out.println(cardNumber);
 
         System.out.println("Por favor, digite o código de segurança");
         String cvv = this.scanner.nextLine();
-        System.out.println(cvv);
 
         System.out.println("Por favor, digite a data de validade");
         String expirationDate = this.scanner.nextLine();
-        System.out.println(expirationDate);
 
         String owner = this.student.getName();
 
@@ -84,7 +103,7 @@ public class Kiosk {
         }
     }
 
-    public void finalizar() {
+    public void restart() {
         System.out.println("Obrigado por utilizar o quiosque.");
         reset();
     }
@@ -103,6 +122,9 @@ public class Kiosk {
         this.student = student;
     }
 
+    public State getState() {
+        return this.state;
+    }
     public void setState(State state) {
         this.state = state;
     }

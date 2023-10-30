@@ -6,7 +6,7 @@ public class Completed implements State {
     }
 
     @Override
-    public void transitionTo() throws IllegalStateException {
+    public void transitionTo(State state) throws IllegalStateException {
         throw new IllegalStateException("Inscrição Finalizada.");
     }
 

@@ -6,15 +6,7 @@ public class Main {
         CreditCardRepository creditCardRepository = new CreditCardRepository();
         Kiosk kiosk = new Kiosk(studentsRepository, coursesRepository, creditCardRepository);
 
-        // Simulando interações do aluno com o
-        do {
-            kiosk.start();
-            kiosk.identifyStudent();
-            kiosk.selectCourse();
-            kiosk.payment();
-            kiosk.generateTicket();
-            kiosk.finalizar();
-        } while (true);
-
+        // Iniciando o kiosk
+        kiosk.start();
     }
 }

@@ -8,8 +8,8 @@ public class Identified implements State {
     }
 
     @Override
-    public void transitionTo() {
-        context.setState(new Processing(context));
+    public void transitionTo(State state) {
+        context.setState(state);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Identified implements State {
         } else {
             System.out.println("Curso '" + course.getName() + "' selecionado.");
             context.setCourse(course);
-            this.transitionTo();
+            this.transitionTo(new Processing(context));
         }
 
     }
