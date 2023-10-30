@@ -1,9 +1,9 @@
 public class CreditCard {
-    private String number;
-    private String cvv;
-    private String expirationDate;
+    private final String number;
+    private final String cvv;
+    private final String expirationDate;
     private double balance;
-    private String owner;
+    private final String owner;
 
     public CreditCard(String number, String cvv, String expirationDate, double balance, String owner) {
         this.number = number;

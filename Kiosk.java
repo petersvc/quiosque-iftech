@@ -3,22 +3,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kiosk {
 
-    private State state;
-    private Course course;
-    private Student student;
+    private State state = new OnHold(this);;
+    private Course course = null;;
+    private Student student = null;
     StudentsRepository studentsRepository;
     CoursesRepository coursesRepository;
-    CreditCardRepository creditCardRepository;
+    CreditCardsRepository creditCardsRepository;
+    TicketsRepository ticketsRepository;
+    private final Scanner scanner = new Scanner(System.in);
 
-    private Scanner scanner = new Scanner(System.in);
-
-    public Kiosk(StudentsRepository studentsRepository, CoursesRepository coursesRepository, CreditCardRepository creditCardRepository) {
-        this.state = new OnHold(this);
-        this.course = null;
-        this.student = null;
+    public Kiosk(StudentsRepository studentsRepository, CoursesRepository coursesRepository, CreditCardsRepository creditCardsRepository, TicketsRepository ticketsRepository) {
         this.studentsRepository = studentsRepository;
         this.coursesRepository = coursesRepository;
-        this.creditCardRepository = creditCardRepository;
+        this.creditCardsRepository = creditCardsRepository;
+        this.ticketsRepository = ticketsRepository;
     }
 
     public void start() {
@@ -27,7 +25,8 @@ public class Kiosk {
     }
 
     public void execute() {
-        do {
+        while (ticketsRepository.getTickets().size() < coursesRepository.getSlots()) {
+            System.out.println(coursesRepository.getSlots() - ticketsRepository.getTickets().size() + " vagas restantes.");
             if (this.getStudent() == null) {
                 this.identifyStudent();
             }
@@ -45,10 +44,11 @@ public class Kiosk {
                 this.generateTicket();
                 this.restart();
             }
-        } while (true);
+        }
     }
 
     public void identifyStudent() {
+        System.out.println("\n-------- Identificação --------\n");
         System.out.println("Por favor, digite a sua matrícula.");
         String enrollment = this.scanner.nextLine();
         try {
@@ -61,11 +61,10 @@ public class Kiosk {
 
     public void selectCourse() {
         AtomicInteger i = new AtomicInteger(1);
-        System.out.println("Por favor, selecione um dos minicursos abaixo.");
+        System.out.println("\n-------- Inscrição em um minicurso --------");
+        System.out.println("\nPor favor, selecione um dos minicursos abaixo.\n");
 
-        this.coursesRepository.getCourses().entrySet().forEach(course -> {
-            System.out.println((i.getAndIncrement()) + " - " + course.getValue().getName() + " | Preço: " + course.getValue().getPrice() + " | Vagas: " + course.getValue().getSlots());
-        });
+        this.coursesRepository.getCourses().forEach((key, value) -> System.out.println((i.getAndIncrement()) + " - " + value.getName() + " | Preço: " + value.getPrice() + " | Vagas: " + value.getSlots()));
 
         String courseKey = this.scanner.nextLine();
 
@@ -77,6 +76,7 @@ public class Kiosk {
     }
 
     public void payment() {
+        System.out.println("\n-------- Pagamento --------\n");
         System.out.println("Por favor, digite o número do cartão");
         String cardNumber = this.scanner.nextLine();
 
@@ -104,7 +104,7 @@ public class Kiosk {
     }
 
     public void restart() {
-        System.out.println("Obrigado por utilizar o quiosque.");
+        System.out.println("Obrigado por utilizar o quiosque.\n");
         reset();
     }
 

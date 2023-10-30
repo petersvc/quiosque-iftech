@@ -22,23 +22,24 @@ public class Subscribed implements State {
 
     @Override
     public void payment(String cardNumber, String cvv, String expirationDate, String owner) throws IllegalStateException {
-        throw new IllegalStateException("Operação inválida. Já o pagamento já foi realizado.");
+        throw new IllegalStateException("Operação inválida. O pagamento já foi realizado.");
     }
 
     @Override
     public Ticket generateTicket() {
         Ticket ticket = new Ticket(
                 context.getStudent(),  // Substitua pelo valor apropriado
-                context.getCourse().getName(),
-                context.getCourse().getPrice()
+                context.getCourse()
         );
 
         context.getCourse().ocuparVaga();
+        context.ticketsRepository.addTicket(ticket);
+
         transitionTo(new Completed(context));
 
         System.out.println("Inscrição realizada com sucesso");
-        System.out.println("vagas restantes: " + context.getCourse().getSlots());
-        System.out.println("-------- Ticket gerado --------\n" + ticket + "\n" + "-------------------------------");
+        System.out.println("vagas restantes para o minicurso '" + context.getCourse().getName() + "': " + context.getCourse().getSlots());
+        System.out.println("\n-------- Ticket gerado --------\n" + ticket + "\n" + "-------------------------------\n");
 
         return ticket;
 

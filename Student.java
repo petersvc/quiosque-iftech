@@ -1,6 +1,6 @@
 public class Student {
-    private String enrollment;
-    private String name;
+    private final String enrollment;
+    private final String name;
 
     public Student(String enrollment, String name) {
         this.enrollment = enrollment;

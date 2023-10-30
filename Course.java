@@ -1,6 +1,6 @@
 public class Course {
-    private String name;
-    private double price;
+    private final String name;
+    private final double price;
 
     private int slots;
 

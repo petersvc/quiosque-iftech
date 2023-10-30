@@ -19,13 +19,13 @@ public class Processing implements State {
 
     @Override
     public void selectCourse(String courseName) throws IllegalStateException {
-        throw new IllegalStateException("Pagamento em processamento. Aguarde a conclusão.");
+        throw new IllegalStateException("Pagamento sendo processado. Aguarde a conclusão.");
     }
 
     @Override
     public void payment(String cardNumber, String cvv, String expirationDate, String owner) throws Exception {
 
-        CreditCard creditCard = this.context.creditCardRepository.findCreditCard(cardNumber);
+        CreditCard creditCard = this.context.creditCardsRepository.findCreditCard(cardNumber);
 
         if (creditCard != null && Objects.equals(creditCard.getCvv(), cvv) && Objects.equals(creditCard.getExpirationDate(), expirationDate) && creditCard.getBalance() >= this.context.getCourse().getPrice()) {
             System.out.println("Cartão autorizado. Realizando o pagamento");

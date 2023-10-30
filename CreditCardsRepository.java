@@ -1,10 +1,10 @@
 import java.util.HashMap;
 
-public class CreditCardRepository {
+public class CreditCardsRepository {
 
-    private HashMap<String, CreditCard> creditCards;
+    private final HashMap<String, CreditCard> creditCards;
 
-    public CreditCardRepository() {
+    public CreditCardsRepository() {
         this.creditCards = new HashMap<>();
         this.loadCreditCards();
     }
