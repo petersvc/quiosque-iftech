@@ -1,14 +1,20 @@
 public class Main {
     public static void main(String[] args) {
-        // Criando um quiosque e um banco de dados simulado
-        MockDB mockDB = new MockDB();
-        Quiosque quiosque = new Quiosque(mockDB);
+        // Criando um kiosk e carregando os cursos e alunos
+        StudentsRepository studentsRepository = new StudentsRepository();
+        CoursesRepository coursesRepository = new CoursesRepository();
+        CreditCardRepository creditCardRepository = new CreditCardRepository();
+        Kiosk kiosk = new Kiosk(studentsRepository, coursesRepository, creditCardRepository);
 
-        // Simulando interações do aluno com o quiosque
-        quiosque.identificarUsuario();
-        quiosque.selecionarProduto();
-        quiosque.pagarProduto();
-        quiosque.gerarTicket();
-        quiosque.reiniciar();
+        // Simulando interações do aluno com o
+        do {
+            kiosk.start();
+            kiosk.identifyStudent();
+            kiosk.selectCourse();
+            kiosk.payment();
+            kiosk.generateTicket();
+            kiosk.finalizar();
+        } while (true);
+
     }
 }
