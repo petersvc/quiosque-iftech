@@ -1,0 +1,24 @@
+# Arquivos compilados
+*.class
+*.jar
+
+# Arquivos de compilação do Maven
+target/
+
+# Arquivos de configuração do Eclipse
+.classpath
+.project
+.settings/
+
+# Diretório de logs
+log/
+
+# Diretório de arquivos temporários
+temp/
+
+# Configuração do IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
